@@ -132,10 +132,10 @@ class ShellyAPIHandler(APIHandler):
             print("Error running command: " + str(e))
 
 
-    def reboot(self):
-        print("Rebooting gateway")
+    def restart(self):
+        print("Restarting gateway")
         try:
-            os.system('sudo systemctl restart mozilla-iot-gateway.service') 
+            os.system('sudo systemctl restart mozilla-iot-gateway.service &') 
         except Exception as e:
             print("Error rebooting: " + str(e))
 

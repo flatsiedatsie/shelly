@@ -68,15 +68,35 @@
 	
 			
       restart.addEventListener('click', () => {
-        content.innerHTML = '<h2>Restarting...</h2><p>This page will reload automatically in 30 seconds. Or <a href="/" style="color:white">click here</a> to try now.</p>';
-				window.API.postJson('/settings/system/actions', {action: 'restartSystem'}).catch(console.error);
+        //content.innerHTML = '<h2>Restarting...</h2><p>This page will reload automatically in 30 seconds. Or <a href="/" style="color:white">click here</a> to try now.</p>';
 				
+				
+				pre.innerHTML = "Restarting..";
+				
+				window.API.postJson(
+	  	          `/extensions/shelly/api/run`,
+	  	          {'command': 'sudo systemctl restart mozilla-iot-gateway.service &'}
+	  	        ).then((body) => {
+	  	          //pre.innerHTML = body; //JSON.stringify(body, null, 2);
+				  pre.innerHTML = "Restarting...";
+	  	        }).catch((e) => {
+	  	          //pre.innerText = e.toString();
+				  pre.innerHTML = "Restarting...";
+	  	        });
+	  		   
+				
+				
+				//window.API.postJson('/settings/system/actions', {action: 'restartSystem'}).catch(console.error);
+				
+				
+				/*
 				var getUrl = window.location;
 				var baseUrl = getUrl .protocol + "//" + getUrl.host + "/things";
 				
 				setTimeout(function(){ 
 					window.location.href = baseUrl;
 				}, 30000);
+				*/
       });
 
     }
